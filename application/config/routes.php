@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
-//$url 		= explode("/",$_SERVER["REQUEST_URI"]); 
+//$url 		= explode("/",$_SERVER["REQUEST_URI"]);
 //$base_url_asp = strtolower($url[1]);
 
 $route['default_controller'] = 'sign/signin_page';

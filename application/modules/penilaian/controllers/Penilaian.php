@@ -535,6 +535,7 @@ class Penilaian extends CI_Controller
 		$data['loyal_sub']		= $this->M_Penilaian->get_subkriteria('3')->result();
 
 		$data['page'] 			= 'tengah';
+		$data['tombol'] 		= 'proses';
 		$data['level']			= $this->session->userdata("level");
 		$data['title']			= 'Normalisasi';
 

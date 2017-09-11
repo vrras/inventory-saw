@@ -100,8 +100,9 @@ class M_Penilaian extends CI_Model
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
 		$query 	= "SELECT *
-		FROM  alternatif
-		ORDER BY hasil_alternatif, jum_kunjungan DESC";
+		FROM `alternatif`
+		ORDER by hasil_alternatif DESC,
+		jum_kunjungan DESC";
 
 		return $kurniajaya->query($query);
 	}
