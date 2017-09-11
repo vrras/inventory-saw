@@ -7,12 +7,12 @@ class Penilaian extends CI_Controller
 		parent::__construct();
 		$this->load->model('query/M_Query');
 		$this->load->model('penilaian/M_Penilaian');
-		
+
 		if($this->sign_validation->signin_valid())
 		{
 			redirect(base_url());
 		}
-		
+
 	}
 
 	// --- KRITERIA ---
@@ -36,7 +36,7 @@ class Penilaian extends CI_Controller
 		$table 				= "kriteria";
 		//$data['kriteria']	= $this->M_Query->select_condition($field,$table,$condition)->result();
 		$data['kriteria']	= $this->M_Query->select_all_data($table)->result();
-		
+
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Data Kriteria';
 
@@ -44,7 +44,7 @@ class Penilaian extends CI_Controller
 	}
 
 	function kriteria_update_action()
-	{		
+	{
 		$id_kriteria 		= $this->input->post('form_id_kriteria');
 		$nm_kriteria		= $this->input->post('form_nm_kriteria');
 		$atribut 			= $this->input->post('form_atribut');
@@ -57,7 +57,7 @@ class Penilaian extends CI_Controller
 		if(($bobot_tp+$bobot_pembayaran+$bobot_lk)>100 OR ($bobot_tp+$bobot_pembayaran+$bobot_lk)<100)
 		{
 			echo "<script>alert('Total bobot harus 100%');</script>";
-			redirect(base_url().'penilaian/kriteria/edit/1','refresh');			
+			redirect(base_url().'penilaian/kriteria/edit/1','refresh');
 		}else
 		{
 			$bobot[0] 			= number_format($bobot[0]/100,2);
@@ -68,21 +68,21 @@ class Penilaian extends CI_Controller
 
 			$count	= $this->M_Query->select_all_data($table)->num_rows();
 
-			for ($i=0; $i < $count; $i++) { 
+			for ($i=0; $i < $count; $i++) {
 				$value 				= array('nm_kriteria' => $nm_kriteria[$i], 'atribut' => $atribut[$i], 'bobot' => $bobot[$i]);
 				$condition 			= array('id_kriteria' => $id_kriteria[$i] );
 
 				$this->M_Query->update_data($table,$value,$condition);
-			}		
+			}
 			redirect(base_url().'penilaian/kriteria');
-		}		
+		}
 	}
 
 	function transaksi_batalall_keranjang()
-	{		
+	{
 		$table 		= 'keranjang';
 		$condition 	= array('del' => '1' );
-		
+
 		$this->M_Query->delete_data($condition,$table);
 		redirect(base_url().'trx/penjualan');
 	}
@@ -90,7 +90,7 @@ class Penilaian extends CI_Controller
 	// --- SUBKRITERIA ---
 	function subkriteria_page()
 	{
-		$data['page'] 		= $this->uri->segment(3); 
+		$data['page'] 		= $this->uri->segment(3);
 
 		//--- Kriteria ---
 		$table 				= "kriteria";
@@ -104,8 +104,8 @@ class Penilaian extends CI_Controller
 
 	function subkriteria_page_tambah()
 	{
-		$data['page']		= $this->uri->segment(3); 
-		$data['id_kriteria']= $this->uri->segment(4); 
+		$data['page']		= $this->uri->segment(3);
+		$data['id_kriteria']= $this->uri->segment(4);
 
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Data Subkriteria';
@@ -130,10 +130,10 @@ class Penilaian extends CI_Controller
 		redirect(base_url().'/penilaian/subkriteria/update/'.$id);
 	}
 
-	function subkriteria_update() 
+	function subkriteria_update()
 	{
-		$data['page'] 			= $this->uri->segment(2); 
-		$id						= $this->uri->segment(4); 
+		$data['page'] 			= $this->uri->segment(2);
+		$id						= $this->uri->segment(4);
 
 		//--- Subkriteria ---
 		$field 					= "*";
@@ -150,7 +150,7 @@ class Penilaian extends CI_Controller
 		$query 					= $this->M_Query->select_condition($field,$table2,$condition2)->result();
 
 		foreach ($query as $field_query) {
-			$data['judul'] 		= $field_query->nm_kriteria; 
+			$data['judul'] 		= $field_query->nm_kriteria;
 		}
 
 		$data['level']			= $this->session->userdata("level");
@@ -166,7 +166,7 @@ class Penilaian extends CI_Controller
 
 		$table 		= 'subkriteria';
 		$condition 	= array('id_subkriteria' => $id );
-		
+
 		$this->M_Query->delete_data($condition,$table);
 		redirect(base_url().'penilaian/subkriteria/update/'.$id_kriteria);
 	}
@@ -254,7 +254,7 @@ class Penilaian extends CI_Controller
 			{
 				$monthawal 	= $this->input->POST('form_year_awal').'-'.$this->input->POST('form_month_awal');
 				$monthakhir	= $this->input->POST('form_year_akhir').'-'.$this->input->POST('form_month_akhir');
-				
+
 				$data['page'] 			= 'awal';
 				$trx_akhir 				= $this->M_Penilaian->transaksi_akhir()->result();
 				$data['criteria1'] 		= $this->M_Penilaian->criteria_one($monthawal,$monthakhir)->result();
@@ -288,10 +288,10 @@ class Penilaian extends CI_Controller
 		//$last_month	= date("Y-m", mktime(0,0, date("Y"), date("m")-6));
 		$kurang_today = date("Y-m-d", mktime(0,0,0, date('m')-5,date('d'),date('Y')));
 		$last_month   = substr($kurang_today, 5,2);
-		$ylast_month  = $year.'-'.$last_month; 
+		$ylast_month  = $year.'-'.$last_month;
 		$kurang_to 	  = date("Y-m-d", mktime(0,0,0, date('m')-11,date('d'),date('Y')));
 		$las_month 	  = substr($kurang_to, 5,2);
-		$ylas_month   = $year.'-'.$las_month; 
+		$ylas_month   = $year.'-'.$las_month;
 
 
 		$today		= date('Y-m');
@@ -307,7 +307,7 @@ class Penilaian extends CI_Controller
 		{
 			if($today==$periode1)
 			{
-				// === Periode 1 === 
+				// === Periode 1 ===
 				$last_month  = $ylast_month;
 				$today 		= $today;
 				$data['last_monthc1'] = $ylast_month;
@@ -318,7 +318,7 @@ class Penilaian extends CI_Controller
 			}
 			elseif($today==$periode2)
 			{
-				// === Periode 1 === 
+				// === Periode 1 ===
 				$las_month 	= $ylas_month;
 				$today_1	= $periode1;
 				$data['last_monthc1'] 	= $las_month;
@@ -335,11 +335,11 @@ class Penilaian extends CI_Controller
 				$data['todayc2'] 	 	= $today1;
 
 				$data['criteria2'] 	= $this->M_Penilaian->criteria_one($last_month1,$today1)->result();
-				$data['periode']	= 'periode2'; 	
+				$data['periode']	= 'periode2';
 
-			}		
+			}
 			elseif ( $today>=$periode1 ) {
-				// === Periode 1 === 
+				// === Periode 1 ===
 				$last_month 		= $periodeawal;
 				$today 				= $periode1;
 				$data['last_monthc1'] = $last_month;
@@ -350,27 +350,27 @@ class Penilaian extends CI_Controller
 				// === Periode 2 ===
 				$tahum 	= substr($periode1, 0,4);
 				$bulam  = substr($periode1, 5,2);
-				$last_month1 = $tahum.'-'.($bulam+1);				
+				$last_month1 = $tahum.'-'.($bulam+1);
 				$today1 	 = $tahum.'-'.($bulam+6);
 				$data['last_monthc2'] = $last_month1;
 				$data['todayc2'] 	 = $today1;
 
 				$data['criteria2'] 	= $this->M_Penilaian->criteria_one($last_month1,$today1)->result();
-				$data['periode']	= 'periode1'; 	
-			}	
+				$data['periode']	= 'periode1';
+			}
 		}
 		else
 		{
 			// === Periode 2 ===
 			$tahum 	= substr($periode1, 0,4);
 			$bulam  = substr($periode1, 5,2);
-			$last_month1 = ($tahum-1).'-0'.($bulam+1);				
+			$last_month1 = ($tahum-1).'-0'.($bulam+1);
 			$today1 	 = ($tahum-1).'-'.($bulam+6);
 			$data['last_monthc2'] = $last_month1;
 			$data['todayc2'] 	 = $today1;
 
 			$data['criteria2'] 	= $this->M_Penilaian->criteria_one($last_month1,$today1)->result();
-			$data['periode']	= 'periode2kurang'; 
+			$data['periode']	= 'periode2kurang';
 		}
 
 		$data['totbel_sub']		= $this->M_Penilaian->get_subkriteria('1')->result();
@@ -396,14 +396,14 @@ class Penilaian extends CI_Controller
 		$table 			= 'alternatif';
 		$count 			= count($id_alternatif);
 
-		for ($i=0; $i < $count; $i++) { 
+		for ($i=0; $i < $count; $i++) {
 
 			$condition 		= array('id_alternatif' => $id_alternatif[$i] );
 			$ada 	 		= $this->M_Query->select_condition($field,$table,$condition)->num_rows();
 			if($ada==0)
 			{
 				$data = array('id_alternatif' => $id_alternatif[$i], 'nama_alternatif' => $nama_alternatif[$i] , 'criteria1' => $criteria1[$i], 'criteria2' => $criteria2[$i], 'criteria3' => $criteria3[$i]);
-				$this->M_Query->insert_data($table,$data);	
+				$this->M_Query->insert_data($table,$data);
 			}
 			else
 			{
@@ -412,14 +412,14 @@ class Penilaian extends CI_Controller
 
 				$this->M_Query->update_data($table,$value,$condition1);
 			}
-			
+
 		}
 
 		$last_month  	= $this->input->post('form_last_month');
 		$today	  		= $this->input->post('form_today');
 		$data['last_month123']  	= $this->input->post('form_last_month');
 		$data['today123']	  		= $this->input->post('form_today');
-		
+
 		$data['criteria1'] 		= $this->M_Penilaian->criteria_one($last_month,$today)->result();
 
 		$data['row_alternatif']	= $this->M_Query->select_all_data($table)->result();
@@ -448,28 +448,28 @@ class Penilaian extends CI_Controller
 		$table 			= 'alternatif';
 		$count 			= count($id_alternatif);
 
-		for ($i=0; $i < $count; $i++) { 
+		for ($i=0; $i < $count; $i++) {
 
 			$condition 		= array('id_alternatif' => $id_alternatif[$i] );
 			$ada 	 		= $this->M_Query->select_condition($field,$table,$condition)->num_rows();
 			if($ada==0)
 			{
 				$data = array('id_alternatif' => $id_alternatif[$i], 'nama_alternatif' => $nama_alternatif[$i] , 'criteria1' => $criteria1[$i], 'criteria2' => $criteria2[$i], 'criteria3' => $criteria3[$i]);
-				$this->M_Query->insert_data($table,$data);	
+				$this->M_Query->insert_data($table,$data);
 			}
 			else
 			{
 				$value 				= array('nama_alternatif' => $nama_alternatif[$i] , 'criteria1' => $criteria1[$i], 'criteria2' => $criteria2[$i], 'criteria3' => $criteria3[$i]);
-				$condition1 			= array('id_alternatif' => $id_alternatif[$i]);
+				$condition1 		= array('id_alternatif' => $id_alternatif[$i]);
 
 				$this->M_Query->update_data($table,$value,$condition1);
 			}
-			
+
 		}
 
 		$last_month  		= $this->input->post('form_last_month1');
 		$today	  		= $this->input->post('form_today1');
-		
+
 		$data['criteria1'] 		= $this->M_Penilaian->criteria_one($last_month,$today)->result();
 
 		$data['row_alternatif']	= $this->M_Query->select_all_data($table)->result();
@@ -498,23 +498,23 @@ class Penilaian extends CI_Controller
 		$table 			= 'alternatif';
 		$count 			= count($id_alternatif);
 
-		for ($i=0; $i < $count; $i++) { 
+		for ($i=0; $i < $count; $i++) {
 
 			$condition 		= array('id_alternatif' => $id_alternatif[$i] );
 			$ada 	 		= $this->M_Query->select_condition($field,$table,$condition)->num_rows();
 			if($ada==0)
 			{
 				$data = array('id_alternatif' => $id_alternatif[$i], 'nama_alternatif' => $nama_alternatif[$i] , 'criteria1' => $criteria1[$i], 'criteria2' => $criteria2[$i], 'criteria3' => $criteria3[$i]);
-				$this->M_Query->insert_data($table,$data);	
+				$this->M_Query->insert_data($table,$data);
 			}
 			else
 			{
 				$value 				= array('nama_alternatif' => $nama_alternatif[$i] , 'criteria1' => $criteria1[$i], 'criteria2' => $criteria2[$i], 'criteria3' => $criteria3[$i]);
-				$condition1 			= array('id_alternatif' => $id_alternatif[$i]);
+				$condition1 		= array('id_alternatif' => $id_alternatif[$i]);
 
 				$this->M_Query->update_data($table,$value,$condition1);
 			}
-			
+
 		}
 
 		$last_month  	= $this->input->post('form_last_month');
@@ -524,7 +524,7 @@ class Penilaian extends CI_Controller
 
 		$data['bulanawal'] 	= $last_month;
 		$data['bulanakhir'] = $today;
-		
+
 		$data['criteria1'] 		= $this->M_Penilaian->criteria_one($last_month,$today)->result();
 
 		$data['row_alternatif']	= $this->M_Query->select_all_data($table)->result();
@@ -546,13 +546,14 @@ class Penilaian extends CI_Controller
 		$data['page'] = 'akhir';
 		$id_alternatif 		= $this->input->post('form_id_alternatif');
 		$nilai 		 		= $this->input->post('form_nilai');
+		$kunjungan	 		= $this->input->post('form_kunjungan');
 		$tahunawal			= substr($this->input->post('periode_terbaik'), 0,4);
 		$bulanawal			= substr($this->input->post('periode_terbaik'), 5,2);
 		$tahunakhir			= substr($this->input->post('periode_terbaik'), 10,4);
 		$bulanakhir			= substr($this->input->post('periode_terbaik'), 15,2);
 		$data['month_titlea']= $this->input->post('periode_terbaik');
 
-		switch ($bulanawal) 
+		switch ($bulanawal)
 		{
 			case 1 : $per_awal = 'January '.$tahunawal; break;
 			case 2 : $per_awal = 'February '.$tahunawal; break;
@@ -568,7 +569,7 @@ class Penilaian extends CI_Controller
 			case 12 : $per_awal = 'December '.$tahunawal; break;
 		}
 
-		switch ($bulanakhir) 
+		switch ($bulanakhir)
 		{
 			case 1 : $per_akhir = 'January '.$tahunakhir; break;
 			case 2 : $per_akhir = 'February '.$tahunakhir; break;
@@ -589,15 +590,16 @@ class Penilaian extends CI_Controller
 		$table 			= 'alternatif';
 		$count 			= count($id_alternatif);
 
-		for ($i=0; $i < $count; $i++) 
-		{ 
-			$value 			= array('hasil_alternatif' => $nilai[$i]);
+		for ($i=0; $i < $count; $i++)
+		{
+			$value 			= array('hasil_alternatif' => $nilai[$i], 'jum_kunjungan' => $kunjungan[$i]);
 			$condition 	 	= array('id_alternatif' => $id_alternatif[$i]);
 
 			$this->M_Query->update_data($table,$value,$condition);
 		}
 
 		$data['alter'] 			= $this->M_Penilaian->get_rangking()->result();
+		$data['double'] 		= $this->M_Penilaian->count_redudansi()->result();
 		$data['level']			= $this->session->userdata("level");
 		$data['title']			= 'Perangkingan';
 

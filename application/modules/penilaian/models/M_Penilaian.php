@@ -7,17 +7,17 @@ class M_Penilaian extends CI_Model
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT transaksi.id_pelanggan, 
-		transaksi.nama_pelanggan, 
-		transaksi.tgl_transaksi, 
-		transaksi.status, 
-		SUM( transaksi.total_harga ) AS total_belanja, 
+		$query 	= "SELECT transaksi.id_pelanggan,
+		transaksi.nama_pelanggan,
+		transaksi.tgl_transaksi,
+		transaksi.status,
+		SUM( transaksi.total_harga ) AS total_belanja,
 		pelanggan.status AS pelstatus
 		FROM transaksi
 		JOIN pelanggan
 		ON transaksi.id_pelanggan= pelanggan.id_pelanggan
-		WHERE ( SUBSTRING( transaksi.tgl_transaksi, 1, 7 ) 
-		BETWEEN  '$lastmonth' AND  '$today' ) 
+		WHERE ( SUBSTRING( transaksi.tgl_transaksi, 1, 7 )
+		BETWEEN  '$lastmonth' AND  '$today' )
 		AND pelanggan.status = 'member'
 		GROUP BY id_pelanggan";
 
@@ -28,16 +28,16 @@ class M_Penilaian extends CI_Model
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT transaksi.id_pelanggan, 
-		transaksi.nama_pelanggan, 
-		transaksi.status, 
+		$query 	= "SELECT transaksi.id_pelanggan,
+		transaksi.nama_pelanggan,
+		transaksi.status,
 		pelanggan.status AS pelstatus
 		FROM transaksi
 		JOIN pelanggan ON transaksi.id_pelanggan = pelanggan.id_pelanggan
-		WHERE (SUBSTRING( transaksi.tgl_transaksi, 1, 7 ) 
+		WHERE (SUBSTRING( transaksi.tgl_transaksi, 1, 7 )
 		BETWEEN  '$lastmonth' AND  '$today' )
 		AND pelanggan.status =  'member'
-		AND transaksi.id_pelanggan =  '$id' 
+		AND transaksi.id_pelanggan =  '$id'
 		AND transaksi.status = 'cash'";
 
 		return $kurniajaya->query($query);
@@ -47,16 +47,16 @@ class M_Penilaian extends CI_Model
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT transaksi.id_pelanggan, 
-		transaksi.nama_pelanggan, 
-		transaksi.status, 
+		$query 	= "SELECT transaksi.id_pelanggan,
+		transaksi.nama_pelanggan,
+		transaksi.status,
 		pelanggan.status AS pelstatus
 		FROM transaksi
 		JOIN pelanggan ON transaksi.id_pelanggan = pelanggan.id_pelanggan
-		WHERE (SUBSTRING( transaksi.tgl_transaksi, 1, 7 ) 
+		WHERE (SUBSTRING( transaksi.tgl_transaksi, 1, 7 )
 		BETWEEN  '$lastmonth' AND  '$today' )
 		AND pelanggan.status =  'member'
-		AND transaksi.id_pelanggan =  '$id' 
+		AND transaksi.id_pelanggan =  '$id'
 		AND transaksi.status = 'credit'";
 
 		return $kurniajaya->query($query);
@@ -66,13 +66,13 @@ class M_Penilaian extends CI_Model
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT transaksi.id_pelanggan, 
-		transaksi.nama_pelanggan, 
-		transaksi.status, 
+		$query 	= "SELECT transaksi.id_pelanggan,
+		transaksi.nama_pelanggan,
+		transaksi.status,
 		pelanggan.status AS pelstatus
 		FROM transaksi
 		JOIN pelanggan ON transaksi.id_pelanggan = pelanggan.id_pelanggan
-		WHERE (SUBSTRING( transaksi.tgl_transaksi, 1, 7 ) 
+		WHERE (SUBSTRING( transaksi.tgl_transaksi, 1, 7 )
 		BETWEEN  '$lastmonth' AND  '$today' )
 		AND pelanggan.status =  'member'
 		AND transaksi.id_pelanggan =  '$id'";
@@ -84,7 +84,7 @@ class M_Penilaian extends CI_Model
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT MIN(criteria1) AS cost1, 
+		$query 	= "SELECT MIN(criteria1) AS cost1,
 		MIN(criteria2) AS cost2,
 		MIN(criteria3) AS cost3,
 		MAX(criteria1) AS benefit1,
@@ -99,22 +99,22 @@ class M_Penilaian extends CI_Model
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT * 
-		FROM  alternatif 
-		ORDER BY hasil_alternatif DESC";
+		$query 	= "SELECT *
+		FROM  alternatif
+		ORDER BY hasil_alternatif, jum_kunjungan DESC";
 
-		return $kurniajaya->query($query); 
+		return $kurniajaya->query($query);
 	}
 
 	function get_subkriteria($id)
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
 
-		$query 	= "SELECT * 
+		$query 	= "SELECT *
 		FROM `subkriteria`
 		WHERE id_kriteria = '$id'";
 
-		return $kurniajaya->query($query); 
+		return $kurniajaya->query($query);
 	}
 
 	function transaksi_akhir()
@@ -125,7 +125,7 @@ class M_Penilaian extends CI_Model
 		FROM transaksi
 		ORDER BY tgl_transaksi ASC ";
 
-		return $kurniajaya->query($query); 
+		return $kurniajaya->query($query);
 	}
 
 	function delete_alternatif()
@@ -134,9 +134,21 @@ class M_Penilaian extends CI_Model
 
 		$query 	= "DELETE FROM alternatif WHERE 1";
 
-		return $kurniajaya->query($query); 
+		return $kurniajaya->query($query);
 	}
 
+	function count_redudansi()
+	{
+		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
+
+		$query 	= "SELECT hasil_alternatif,
+		COUNT(*) duplikasi
+		FROM alternatif
+		GROUP BY hasil_alternatif
+		HAVING COUNT(hasil_alternatif) > 1";
+
+		return $kurniajaya->query($query);
+	}
 }
 
 /* --- END OF FILE --- */
