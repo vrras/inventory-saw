@@ -136,13 +136,24 @@ $route['print/penjualan/yearly/:any'] 	= 'laporan/print_penjualan_yearly';
 $route['print/penjualan/monthly/:any'] 	= 'laporan/print_penjualan_monthly';
 $route['print/penjualan/daily/:any'] 	= 'laporan/print_penjualan_daily';
 
-// === Laporan Barang ===
+// === Laporan barang ===
 $route['laporan/barang/yearly'] 		= 'laporan/laporan_barang_yearly';
 $route['laporan/barang/monthly'] 		= 'laporan/laporan_barang_monthly';
 $route['laporan/barang/daily'] 			= 'laporan/laporan_barang_daily';
-$route['laporan/pelanggan'] 			= 'laporan/laporan_pelanggan';
-$route['laporan/pelanggan/normalisasi'] = 'laporan/normalisasi_page';
-$route['laporan/pelanggan/rangking'] 	= 'laporan/rangking_page';
 $route['print/barang/yearly/:any'] 		= 'laporan/print_barang_yearly';
 $route['print/barang/monthly/:any'] 	= 'laporan/print_barang_monthly';
 $route['print/barang/daily/:any'] 		= 'laporan/print_barang_daily';
+
+// === Laporan pelanggan
+$route['laporan/pelanggan'] 			= 'laporan/laporan_pelanggan';
+$route['laporan/pelanggan/normalisasi'] = 'laporan/normalisasi_page';
+$route['laporan/pelanggan/rangking'] 	= 'laporan/rangking_page';
+
+// === Data hadiah ===
+$route['data/hadiah'] 				= 'hadiah/hadiah_page';
+$route['data/hadiah/input'] 		= 'hadiah/hadiah_input_page';
+$route['data/hadiah/input/action'] 	= 'hadiah/hadiah_input_action';
+$route['data/hadiah/action'] 		= 'hadiah/action_update';
+$route['data/hadiah/edit/:any'] 	= 'hadiah/hadiah_update_page';
+$route['data/hadiah/edit/action'] 	= 'hadiah/hadiah_update_action';
+$route['data/hadiah/delete/:any'] 	= 'hadiah/hadiah_delete_action';

@@ -150,6 +150,15 @@ class M_Penilaian extends CI_Model
 
 		return $kurniajaya->query($query);
 	}
+
+	function get_hadiah()
+	{
+		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
+
+		$query 	= "SELECT * FROM hadiah";
+
+		return $kurniajaya->query($query);
+	}
 }
 
 /* --- END OF FILE --- */

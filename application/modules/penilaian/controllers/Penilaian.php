@@ -600,6 +600,7 @@ class Penilaian extends CI_Controller
 		}
 
 		$data['alter'] 			= $this->M_Penilaian->get_rangking()->result();
+		$data['hadiah'] 		= $this->M_Penilaian->get_hadiah()->result();
 		$data['double'] 		= $this->M_Penilaian->count_redudansi()->result();
 		$data['level']			= $this->session->userdata("level");
 		$data['title']			= 'Perangkingan';

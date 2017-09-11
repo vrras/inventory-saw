@@ -15,12 +15,12 @@
                 <div class="profile-data-name"><?=$this->session->userdata("full_name");?></div>
                 <div class="profile-data-title"><?=$this->session->userdata("level");?></div>
             </div>
-        </div>                                                                        
+        </div>
     </li>
     <center><li class="xn-title"><b>Daftar Menu</b></li></center>
     <li>
-        <a href="<?=base_url().'dashboard/'?>"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
-    </li>  
+        <a href="<?=base_url().'dashboard/'?>"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+    </li>
     <?php
     if($this->session->userdata("level")=='Pemilik'){
         ?>
@@ -73,6 +73,9 @@
                 </li>
             </ul>
         </li>
+        <li>
+            <a href="<?=base_url().'data/hadiah/'?>"><span class="fa fa-desktop"></span> <span class="xn-text">DATA HADIAH</span></a>
+        </li>
         <li class="xn-openable">
             <a href="#"><span class="fa fa-laptop"></span> <span class="xn-text">DATA PENILAIAN</span></a>
             <ul>
@@ -83,8 +86,8 @@
 
                 </li>
             </ul>
-        </li>  
+        </li>
         <?php
     }
-    ?> 
+    ?>
 </ul>

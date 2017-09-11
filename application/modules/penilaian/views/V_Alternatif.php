@@ -594,6 +594,12 @@ elseif($page=='akhir')
     $hasil_red[]          = $field_double->hasil_alternatif;
   }
 
+  foreach ($hadiah as $field_hadiah) {
+    $array_hadiah[] = $field_hadiah->nama_hadiah;
+  }
+
+  $acak_hadiah = array_rand($array_hadiah);
+
   $count_alter = count($id);
   ?>
   <div class="row">
@@ -660,7 +666,7 @@ elseif($page=='akhir')
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?>. </b></h5>
+        <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?></b> dan berhak mendapatkan hadiah <b><?=$array_hadiah[$acak_hadiah];?></b>.</h5>
       </div>
     </div>
   </div>
