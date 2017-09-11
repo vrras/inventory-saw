@@ -6,13 +6,13 @@ if($page=='utama')
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading">  
-          <h2 class="panel-title"> <b><?=$title?></b></h2> 
+        <div class="panel-heading">
+          <h2 class="panel-title"> <b><?=$title?></b></h2>
           <ul class="panel-controls" style="margin-top: 2px;">
            <li>
              <a href="<?= base_url().'account/new';?>" title="Tambah User"><span class="glyphicon glyphicon-plus"></span></a>
-           </li>                                    
-         </ul>                              
+           </li>
+         </ul>
        </div>
        <div class="panel-body">
          <table id="sampleTable3" class="table datatable">
@@ -28,7 +28,7 @@ if($page=='utama')
           <?php
 
           $no = 1;
-          foreach($account as $field_account){ 
+          foreach($account as $field_account){
             ?>
             <tr>
               <td><?php echo $no++; ?></td>
@@ -45,7 +45,7 @@ if($page=='utama')
                     <a href="<?=base_url().'account/delete/'.$field_account->id_user;?>" class="btn btn-primary"><i class="fa fa-trash-o"></i></a>
                     <a href="<?=base_url().'account/edit/'.$field_account->id_user;?>" class="btn btn-default"><i class="fa fa-edit"></i></a>
                     <a href="<?=base_url().'account/newpassword/'.$field_account->id_user;?>" class="btn btn-warning"><i class="fa fa-key"></i></a>
-                  </center> 
+                  </center>
 
                   <?php
                 }
@@ -63,15 +63,15 @@ if($page=='utama')
 
 <?php
 }
-elseif ($page=='insert') 
+elseif ($page=='insert')
 {
   ?>
 
   <div class="row">
-    <div class="col-md-12"> 
+    <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading">         
-          <h2 class="panel-title"> <b><?=$title?></b></h2>                            
+        <div class="panel-heading">
+          <h2 class="panel-title"> <b><?=$title?></b></h2>
         </div>
         <div class="panel-body">
           <div class="col-md-4"></div>
@@ -111,15 +111,15 @@ elseif ($page=='insert')
 
 <?php
 }
-elseif ($page=='update') 
+elseif ($page=='update')
 {
   ?>
 
   <div class="row">
-    <div class="col-md-12"> 
+    <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading">         
-          <h2 class="panel-title"> <b><?=$title?></b></h2>                            
+        <div class="panel-heading">
+          <h2 class="panel-title"> <b><?=$title?></b></h2>
         </div>
         <div class="panel-body">
           <div class="col-md-4"></div>
@@ -152,7 +152,7 @@ elseif ($page=='update')
 
 <?php
 }
-elseif ($page=='password') 
+elseif ($page=='password')
 {
   ?>
   <script>
@@ -173,10 +173,10 @@ elseif ($page=='password')
   </script>
 
   <div class="row">
-    <div class="col-md-12"> 
+    <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading">         
-          <h2 class="panel-title"> <b><?=$title?></b></h2>                            
+        <div class="panel-heading">
+          <h2 class="panel-title"> <b><?=$title?></b></h2>
         </div>
         <div class="panel-body">
           <div class="col-md-4"></div>
@@ -211,6 +211,6 @@ elseif ($page=='password')
   </div>
 </div>
 
-<?php  
+<?php
 }
 ?>
