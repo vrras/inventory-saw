@@ -548,6 +548,7 @@ class Penilaian extends CI_Controller
 		$id_alternatif 		= $this->input->post('form_id_alternatif');
 		$nilai 		 		= $this->input->post('form_nilai');
 		$kunjungan	 		= $this->input->post('form_kunjungan');
+		$belanja	 		= $this->input->post('form_total_blanja');
 		$tahunawal			= substr($this->input->post('periode_terbaik'), 0,4);
 		$bulanawal			= substr($this->input->post('periode_terbaik'), 5,2);
 		$tahunakhir			= substr($this->input->post('periode_terbaik'), 10,4);
@@ -593,7 +594,7 @@ class Penilaian extends CI_Controller
 
 		for ($i=0; $i < $count; $i++)
 		{
-			$value 			= array('hasil_alternatif' => $nilai[$i], 'jum_kunjungan' => $kunjungan[$i]);
+			$value 			= array('hasil_alternatif' => $nilai[$i], 'jum_kunjungan' => $kunjungan[$i], 'avg_belanja' => $belanja[$i]);
 			$condition 	 	= array('id_alternatif' => $id_alternatif[$i]);
 
 			$this->M_Query->update_data($table,$value,$condition);

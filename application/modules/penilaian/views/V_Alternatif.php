@@ -565,7 +565,8 @@ print_r($benefit3); echo "<br>";
                 <?=$sum_total[$i]?>
                 <input type="hidden" name="form_nilai[]" value="<?=$sum_total[$i]?>">
                 <input type="hidden" name="form_kunjungan[]" value="<?=$loyal[$i]?>">
-
+                <input type="hidden" name="form_pembayaran[]" value="<?=$loyal[$i]?>">
+                <input type="hidden" name="form_total_blanja[]" value="<?=$total_belanja[$i]/$loyal[$i];?>">
               </td>
             </tr>
             <?php

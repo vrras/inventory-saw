@@ -102,7 +102,9 @@ class M_Penilaian extends CI_Model
 		$query 	= "SELECT *
 		FROM `alternatif`
 		ORDER by hasil_alternatif DESC,
-		jum_kunjungan DESC";
+		jum_kunjungan DESC,
+		criteria2 DESC,
+		avg_belanja DESC";
 
 		return $kurniajaya->query($query);
 	}
