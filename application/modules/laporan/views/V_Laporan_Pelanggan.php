@@ -3,7 +3,7 @@
 if($page=='awal')
 {
   foreach ($criteria1 as $field_criteria1) {
-    $id_member[]      = $field_criteria1->id_pelanggan; 
+    $id_member[]      = $field_criteria1->id_pelanggan;
     $alternatif[]     = $field_criteria1->nama_pelanggan;
     $total_belanja[]  = $field_criteria1->total_belanja;
     $status_belanja[] = $field_criteria1->status;
@@ -47,20 +47,20 @@ if($page=='awal')
     $count_alt = 0;
   }
 
-  for ($j=0; $j < $count_alt ; $j++) { 
+  for ($j=0; $j < $count_alt ; $j++) {
     if($total_belanja[$j]/$loyal[$j]>1500000)
     {
       $tot_belanja = $nilai1[0];
     }
-    elseif (($total_belanja[$j]/$loyal[$j]<=1500000) AND ($total_belanja[$j]/$loyal[$j]>1000000)) 
+    elseif (($total_belanja[$j]/$loyal[$j]<=1500000) AND ($total_belanja[$j]/$loyal[$j]>1000000))
     {
       $tot_belanja = $nilai1[1];
     }
-    elseif (($total_belanja[$j]/$loyal[$j]<=1000000) AND ($total_belanja[$j]/$loyal[$j]>500000)) 
+    elseif (($total_belanja[$j]/$loyal[$j]<=1000000) AND ($total_belanja[$j]/$loyal[$j]>500000))
     {
       $tot_belanja = $nilai1[2];
     }
-    elseif (($total_belanja[$j]/$loyal[$j]<=500000) AND ($total_belanja[$j]/$loyal[$j]>100000)) 
+    elseif (($total_belanja[$j]/$loyal[$j]<=500000) AND ($total_belanja[$j]/$loyal[$j]>100000))
     {
       $tot_belanja = $nilai1[3];
     }
@@ -86,15 +86,15 @@ if($page=='awal')
     {
       $loyl = $nilai3[0];
     }
-    elseif (($loyal[$j]<=9) AND ($loyal[$j]>=8)) 
+    elseif (($loyal[$j]<=9) AND ($loyal[$j]>=8))
     {
       $loyl = $nilai3[1];
     }
-    elseif (($loyal[$j]<=7) AND ($loyal[$j]>=6)) 
+    elseif (($loyal[$j]<=7) AND ($loyal[$j]>=6))
     {
       $loyl = $nilai3[2];
     }
-    elseif (($loyal[$j]<=5) AND ($loyal[$j]>=4)) 
+    elseif (($loyal[$j]<=5) AND ($loyal[$j]>=4))
     {
       $loyl = $nilai3[3];
     }
@@ -109,10 +109,10 @@ if($page=='awal')
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading">  
-          <h2 class="panel-title"> <b><?=$title?> Periode (<?=$month_title?>)</b></h2> 
-          <ul class="panel-controls" style="margin-top: 2px;">                                
-          </ul>                              
+        <div class="panel-heading">
+          <h2 class="panel-title"> <b><?=$title?> Periode (<?=$month_title?>)</b></h2>
+          <ul class="panel-controls" style="margin-top: 2px;">
+          </ul>
         </div>
         <div class="panel-body">
           <form role="form" method="POST" action="<?=base_url().'laporan/pelanggan'?>">
@@ -141,7 +141,7 @@ if($page=='awal')
                 <select name="form_year_awal" class="select2_year form-control" required="">
                   <option value="Year">Year</option>
                   <?php
-                  for ($i=2016; $i <= date('Y'); $i++) { 
+                  for ($i=2016; $i <= date('Y'); $i++) {
                     ?>
                     <option value="<?=$i?>"><?=$i?></option>
                     <?php
@@ -175,7 +175,7 @@ if($page=='awal')
                   <select name="form_year_akhir" class="select2_year form-control" required="">
                     <option value="Year">Year</option>
                     <?php
-                    for ($i=2016; $i <= date('Y'); $i++) { 
+                    for ($i=2016; $i <= date('Y'); $i++) {
                       ?>
                       <option value="<?=$i?>"><?=$i?></option>
                       <?php
@@ -201,7 +201,7 @@ if($page=='awal')
                 <th rowspan="2" style="text-align: center;">Alternatif</th>
                 <th colspan="3" style="text-align: center;">Kriteria</th>
               </tr>
-              <tr> 
+              <tr>
                 <th style="text-align: center;">C1</th>
                 <th style="text-align: center;">C2</th>
                 <th style="text-align: center;">C3</th>
@@ -210,7 +210,7 @@ if($page=='awal')
             <tbody>
               <?php
               $no = 1;
-              for ($i=0; $i < $count_alt ; $i++) { 
+              for ($i=0; $i < $count_alt ; $i++) {
                 ?>
                 <tr>
                   <td widtd="60px" style="text-align: center;"><?=$no++?></td>
@@ -234,7 +234,7 @@ if($page=='awal')
                 </tr>
                 <?php
               }
-              ?>  
+              ?>
             </tbody>
           </table>
           <div class="col-md-4"></div>
@@ -245,18 +245,18 @@ if($page=='awal')
   </div>
 </div>
 
-<?php 
+<?php
 }
-elseif ($page=='tengah') 
+elseif ($page=='tengah')
 {
   // === AWAL ===
   foreach ($criteria1 as $field_criteria1) {
-    $id_member[]      = $field_criteria1->id_pelanggan; 
+    $id_member[]      = $field_criteria1->id_pelanggan;
     $alternatif[]     = $field_criteria1->nama_pelanggan;
     $total_belanja[]  = $field_criteria1->total_belanja;
     $status_belanja[] = $field_criteria1->status;
   }
-  
+
   $count = count($id_member);
   $last_month = date("Y-m", mktime(0,0, date("Y"), date("m")-6));
   $today    = date('Y-m');
@@ -304,20 +304,20 @@ elseif ($page=='tengah')
   }
 
   $count_alt = count($alternatif);
-  for ($j=0; $j < $count_alt ; $j++) { 
+  for ($j=0; $j < $count_alt ; $j++) {
     if($total_belanja[$j]/$loyal[$j]>1500000)
     {
       $tot_belanja = $nilai1[0];
     }
-    elseif (($total_belanja[$j]/$loyal[$j]<=1500000) AND ($total_belanja[$j]/$loyal[$j]>1000000)) 
+    elseif (($total_belanja[$j]/$loyal[$j]<=1500000) AND ($total_belanja[$j]/$loyal[$j]>1000000))
     {
       $tot_belanja = $nilai1[1];
     }
-    elseif (($total_belanja[$j]/$loyal[$j]<=1000000) AND ($total_belanja[$j]/$loyal[$j]>500000)) 
+    elseif (($total_belanja[$j]/$loyal[$j]<=1000000) AND ($total_belanja[$j]/$loyal[$j]>500000))
     {
       $tot_belanja = $nilai1[2];
     }
-    elseif (($total_belanja[$j]/$loyal[$j]<=500000) AND ($total_belanja[$j]/$loyal[$j]>100000)) 
+    elseif (($total_belanja[$j]/$loyal[$j]<=500000) AND ($total_belanja[$j]/$loyal[$j]>100000))
     {
       $tot_belanja = $nilai1[3];
     }
@@ -343,15 +343,15 @@ elseif ($page=='tengah')
     {
       $loyl = $nilai3[0];
     }
-    elseif (($loyal[$j]<=9) AND ($loyal[$j]>=8)) 
+    elseif (($loyal[$j]<=9) AND ($loyal[$j]>=8))
     {
       $loyl = $nilai3[1];
     }
-    elseif (($loyal[$j]<=7) AND ($loyal[$j]>=6)) 
+    elseif (($loyal[$j]<=7) AND ($loyal[$j]>=6))
     {
       $loyl = $nilai3[2];
     }
-    elseif (($loyal[$j]<=5) AND ($loyal[$j]>=4)) 
+    elseif (($loyal[$j]<=5) AND ($loyal[$j]>=4))
     {
       $loyl = $nilai3[3];
     }
@@ -364,7 +364,7 @@ elseif ($page=='tengah')
   }
 
   $count_tengah = count($id_alternatif2);
-  for ($b=0; $b < $count_tengah; $b++) { 
+  for ($b=0; $b < $count_tengah; $b++) {
     if($atribut[0]=='cost')
     {
       $r1[] = $cost1[0]/$tott[$b];
@@ -432,10 +432,10 @@ print_r($benefit3); echo "<br>";
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
-      <div class="panel-heading">  
-        <h2 class="panel-title"> <b>Nilai Alternatif Kriteria Periode (<?=$month_title?>)</b></h2> 
-        <ul class="panel-controls" style="margin-top: 2px;">                                
-        </ul>                              
+      <div class="panel-heading">
+        <h2 class="panel-title"> <b>Nilai Alternatif Kriteria Periode (<?=$month_title?>)</b></h2>
+        <ul class="panel-controls" style="margin-top: 2px;">
+        </ul>
       </div>
       <div class="panel-body">
        <table id="sampleTable3" class="table datatable">
@@ -445,7 +445,7 @@ print_r($benefit3); echo "<br>";
             <th rowspan="2" style="text-align: center;">Alternatif</th>
             <th colspan="3" style="text-align: center;">Kriteria</th>
           </tr>
-          <tr> 
+          <tr>
             <th style="text-align: center;">C1</th>
             <th style="text-align: center;">C2</th>
             <th style="text-align: center;">C3</th>
@@ -455,7 +455,7 @@ print_r($benefit3); echo "<br>";
           <?php
           $no = 1;
 
-          for ($i=0; $i < $count_tengah ; $i++) { 
+          for ($i=0; $i < $count_tengah ; $i++) {
             ?>
             <tr>
               <td widtd="60px" style="text-align: center;"><?=$no++?></td>
@@ -475,7 +475,7 @@ print_r($benefit3); echo "<br>";
             </tr>
             <?php
           }
-          ?>  
+          ?>
         </tbody>
       </table>
     </div>
@@ -484,10 +484,10 @@ print_r($benefit3); echo "<br>";
 
 <div class="col-md-12">
   <div class="panel panel-default">
-    <div class="panel-heading">  
-      <h2 class="panel-title"> <b>Normalisasi R</b></h2> 
-      <ul class="panel-controls" style="margin-top: 2px;">                                
-      </ul>                              
+    <div class="panel-heading">
+      <h2 class="panel-title"> <b>Normalisasi R</b></h2>
+      <ul class="panel-controls" style="margin-top: 2px;">
+      </ul>
     </div>
     <div class="panel-body">
      <table id="sampleTable3" class="table datatable">
@@ -497,7 +497,7 @@ print_r($benefit3); echo "<br>";
           <th rowspan="2" style="text-align: center;">Alternatif</th>
           <th colspan="3" style="text-align: center;">Kriteria</th>
         </tr>
-        <tr> 
+        <tr>
           <th style="text-align: center;">C1</th>
           <th style="text-align: center;">C2</th>
           <th style="text-align: center;">C3</th>
@@ -506,7 +506,7 @@ print_r($benefit3); echo "<br>";
       <tbody>
         <?php
         $no = 1;
-        for ($i=0; $i < $count_tengah ; $i++) { 
+        for ($i=0; $i < $count_tengah ; $i++) {
           ?>
           <tr>
             <td widtd="60px" style="text-align: center;"><?=$no++?></td>
@@ -526,7 +526,7 @@ print_r($benefit3); echo "<br>";
           </tr>
           <?php
         }
-        ?>  
+        ?>
       </tbody>
     </table>
   </div>
@@ -535,17 +535,17 @@ print_r($benefit3); echo "<br>";
 
 <div class="col-md-12">
   <div class="panel panel-default">
-    <div class="panel-heading">  
-      <h2 class="panel-title"> <b>Hasil Akhir</b></h2> 
-      <ul class="panel-controls" style="margin-top: 2px;">                                
-      </ul>                              
+    <div class="panel-heading">
+      <h2 class="panel-title"> <b>Hasil Akhir</b></h2>
+      <ul class="panel-controls" style="margin-top: 2px;">
+      </ul>
     </div>
     <div class="panel-body">
       <form name="alternatif_form" method="post" action="<?=base_url().'laporan/pelanggan/rangking'?>">
         <input type="hidden" name="periode_terbaik" value="<?=$month_title?>">
         <table id="sampleTable3" class="table datatable">
          <thead>
-          <tr> 
+          <tr>
             <th width="60px" style="text-align: center;">#</th>
             <th style="text-align: center;">Alternatif</th>
             <th style="text-align: center;">Nilai</th>
@@ -554,7 +554,7 @@ print_r($benefit3); echo "<br>";
         <tbody>
           <?php
           $no = 1;
-          for ($i=0; $i < $count_tengah ; $i++) { 
+          for ($i=0; $i < $count_tengah ; $i++) {
             ?>
             <tr>
               <td><?=$no++?></td>
@@ -563,6 +563,8 @@ print_r($benefit3); echo "<br>";
               <td style="text-align: center">
                 <?=$sum_total[$i]?>
                 <input type="hidden" name="form_nilai[]" value="<?=$sum_total[$i]?>">
+                <input type="hidden" name="form_kunjungan[]" value="<?=$loyal[$i]?>">
+                <input type="hidden" name="form_total_blanja[]" value="<?=$total_belanja[$i]/$loyal[$i];?>">
               </td>
             </tr>
             <?php
@@ -587,19 +589,32 @@ elseif($page=='akhir')
     $nilai[]        = $field_alter->hasil_alternatif;
   }
 
+  foreach ($double as $field_double) {
+    $hasil_red[]          = $field_double->hasil_alternatif;
+  }
+
+  foreach ($hadiahalt as $field_hadiahalt) {
+    $id_hadiah[] = $field_hadiahalt->id_hadiah;
+  }
+  $id_hadiah = $id_hadiah[0];
+
+  foreach ($hadiah as $field_hadiah) {
+    $nama_hadiah[] = $field_hadiah->nama_hadiah;
+  }
+
   $count_alter = count($id);
   ?>
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading">  
-          <h2 class="panel-title"> <b>Hasil Akhir Periode (<?=$month_titlea?>)</b></h2> 
-          <ul class="panel-controls" style="margin-top: 2px;">                                
-          </ul>                              
+        <div class="panel-heading">
+          <h2 class="panel-title"> <b>Hasil Akhir Periode (<?=$month_titlea?>)</b></h2>
+          <ul class="panel-controls" style="margin-top: 2px;">
+          </ul>
         </div>
         <div class="panel-body">
-         <table class="table table-bordered">
-           <thead>
+        <table class="table table-bordered">
+          <thead>
             <tr>
               <th style="text-align: center;" colspan="2">Hasil</th>
               <th style="text-align: center;" rowspan="2">Rangking</th>
@@ -614,7 +629,7 @@ elseif($page=='akhir')
             if($count_alter>4)
             {
               $rank = 1;
-              for ($i=0; $i < 5 ; $i++) { 
+              for ($i=0; $i < 5 ; $i++) {
                 ?>
                 <tr>
                   <td><?=$nama_alter[$i]?></td>
@@ -631,7 +646,7 @@ elseif($page=='akhir')
             else
             {
               $rank = 1;
-              for ($i=0; $i < $count_alter; $i++) { 
+              for ($i=0; $i < $count_alter; $i++) {
                 ?>
                 <tr>
                   <td><?=$nama_alter[$i]?></td>
@@ -652,8 +667,8 @@ elseif($page=='akhir')
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading">                           
-        <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?>. </b></h5>
+      <div class="panel-heading">
+        <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?></b> dan berhak mendapatkan hadiah <b><?=$nama_hadiah[$id_hadiah];?></b>.</h5>
       </div>
     </div>
   </div>

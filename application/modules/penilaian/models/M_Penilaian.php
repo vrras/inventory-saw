@@ -109,6 +109,16 @@ class M_Penilaian extends CI_Model
 		return $kurniajaya->query($query);
 	}
 
+	function update_hadiah($data)
+	{
+		$kurniajaya	= $this->load->database('kurniajaya', TRUE);
+
+		$query 	= "UPDATE hadiah_alternatif
+		SET id_hadiah = '$data'";
+
+		return $kurniajaya->query($query);
+	}
+
 	function get_subkriteria($id)
 	{
 		$kurniajaya	= $this->load->database('kurniajaya', TRUE);

@@ -8,12 +8,12 @@ class Laporan extends CI_Controller
 		$this->load->model('laporan/M_Laporan');
 		$this->load->model('penilaian/M_Penilaian');
 		$this->load->model('query/M_Query');
-		
+
 		if($this->sign_validation->signin_valid())
 		{
 			redirect(base_url());
 		}
-		
+
 	}
 
 	function laporan_penjualan_yearly()
@@ -35,7 +35,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Penjualan';
 
-		$this->template->display('laporan/V_Laporan_Penjualan',$data);	
+		$this->template->display('laporan/V_Laporan_Penjualan',$data);
 	}
 
 	function print_penjualan_yearly()
@@ -47,7 +47,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Penjualan Tahunan';
 
-		$this->load->view('laporan/V_Print_Penjualan',$data);	
+		$this->load->view('laporan/V_Print_Penjualan',$data);
 	}
 
 	function laporan_penjualan_monthly()
@@ -70,7 +70,7 @@ class Laporan extends CI_Controller
 		else
 		{
 			$month 	= $this->input->POST('form_year').'-'.$this->input->POST('form_month');
-			switch (substr($month,-2)) 
+			switch (substr($month,-2))
 			{
 				case 1 : $data['month_title'] = 'January '.$this->input->POST('form_year'); break;
 				case 2 : $data['month_title'] = 'February '.$this->input->POST('form_year'); break;
@@ -89,7 +89,7 @@ class Laporan extends CI_Controller
 			$data['title']	= 'Laporan Penjualan';
 			$data['bulantahun'] = $month;
 			$data['trx_month']	= $this->M_Laporan->monthly_transaction($month)->result();
-			
+
 			$this->template->display('laporan/V_Laporan_Penjualan',$data);
 
 		}
@@ -105,7 +105,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Penjualan Bulanan';
 
-		$this->load->view('laporan/V_Print_Penjualan',$data);	
+		$this->load->view('laporan/V_Print_Penjualan',$data);
 	}
 
 	function laporan_penjualan_daily()
@@ -134,7 +134,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Penjualan Harian';
 
-		$this->load->view('laporan/V_Print_Penjualan',$data);	
+		$this->load->view('laporan/V_Print_Penjualan',$data);
 	}
 
 	function laporan_barang_yearly()
@@ -156,7 +156,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Barang';
 
-		$this->template->display('laporan/V_Laporan_Barang',$data);	
+		$this->template->display('laporan/V_Laporan_Barang',$data);
 	}
 
 	function print_barang_yearly()
@@ -168,9 +168,9 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Penjualan Tahunan';
 
-		$this->load->view('laporan/V_Print_Barang',$data);	
+		$this->load->view('laporan/V_Print_Barang',$data);
 	}
-	
+
 	function laporan_barang_monthly()
 	{
 		$data['page'] 	= $this->uri->segment(3);
@@ -192,7 +192,7 @@ class Laporan extends CI_Controller
 		else
 		{
 			$month 	= $this->input->POST('form_year').'-'.$this->input->POST('form_month');
-			switch (substr($month,-2)) 
+			switch (substr($month,-2))
 			{
 				case 1 : $data['month_title'] = 'January '.$this->input->POST('form_year'); break;
 				case 2 : $data['month_title'] = 'February '.$this->input->POST('form_year'); break;
@@ -212,7 +212,7 @@ class Laporan extends CI_Controller
 			$data['bulantahun'] = $month;
 			$data['trx_stok']	= $this->M_Laporan->monthly_stok_barang($month)->result();
 			$data['trx_month']	= $this->M_Laporan->monthly_barang($month)->result();
-			
+
 			$this->template->display('laporan/V_Laporan_Barang',$data);
 
 		}
@@ -229,7 +229,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Barang Bulanan';
 
-		$this->load->view('laporan/V_Print_Barang',$data);	
+		$this->load->view('laporan/V_Print_Barang',$data);
 	}
 
 	function laporan_barang_daily()
@@ -260,7 +260,7 @@ class Laporan extends CI_Controller
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Laporan Penjualan Harian';
 
-		$this->load->view('laporan/V_Print_Barang',$data);	
+		$this->load->view('laporan/V_Print_Barang',$data);
 	}
 
 	function laporan_pelanggan()
@@ -303,7 +303,7 @@ class Laporan extends CI_Controller
 			{
 				$monthawal 	= $this->input->POST('form_year_awal').'-'.$this->input->POST('form_month_awal');
 				$monthakhir	= $this->input->POST('form_year_akhir').'-'.$this->input->POST('form_month_akhir');
-				
+
 				$data['page'] 			= 'awal';
 				$trx_akhir 				= $this->M_Penilaian->transaksi_akhir()->result();
 				$data['criteria1'] 		= $this->M_Penilaian->criteria_one($monthawal,$monthakhir)->result();
@@ -339,14 +339,14 @@ class Laporan extends CI_Controller
 		$table 			= 'alternatif';
 		$count 			= count($id_alternatif);
 
-		for ($i=0; $i < $count; $i++) { 
+		for ($i=0; $i < $count; $i++) {
 
 			$condition 		= array('id_alternatif' => $id_alternatif[$i] );
 			$ada 	 		= $this->M_Query->select_condition($field,$table,$condition)->num_rows();
 			if($ada==0)
 			{
 				$data = array('id_alternatif' => $id_alternatif[$i], 'nama_alternatif' => $nama_alternatif[$i] , 'criteria1' => $criteria1[$i], 'criteria2' => $criteria2[$i], 'criteria3' => $criteria3[$i]);
-				$this->M_Query->insert_data($table,$data);	
+				$this->M_Query->insert_data($table,$data);
 			}
 			else
 			{
@@ -355,7 +355,7 @@ class Laporan extends CI_Controller
 
 				$this->M_Query->update_data($table,$value,$condition1);
 			}
-			
+
 		}
 
 		$last_month  	= $this->input->post('form_last_month');
@@ -365,7 +365,7 @@ class Laporan extends CI_Controller
 
 		$data['bulanawal'] 	= $last_month;
 		$data['bulanakhir'] = $today;
-		
+
 		$data['criteria1'] 		= $this->M_Penilaian->criteria_one($last_month,$today)->result();
 
 		$data['row_alternatif']	= $this->M_Query->select_all_data($table)->result();
@@ -387,13 +387,15 @@ class Laporan extends CI_Controller
 		$data['page'] = 'akhir';
 		$id_alternatif 		= $this->input->post('form_id_alternatif');
 		$nilai 		 		= $this->input->post('form_nilai');
+		$kunjungan	 		= $this->input->post('form_kunjungan');
+		$belanja	 		= $this->input->post('form_total_blanja');
 		$tahunawal			= substr($this->input->post('periode_terbaik'), 0,4);
 		$bulanawal			= substr($this->input->post('periode_terbaik'), 5,2);
 		$tahunakhir			= substr($this->input->post('periode_terbaik'), 10,4);
 		$bulanakhir			= substr($this->input->post('periode_terbaik'), 15,2);
 		$data['month_titlea']= $this->input->post('periode_terbaik');
 
-		switch ($bulanawal) 
+		switch ($bulanawal)
 		{
 			case 1 : $per_awal = 'January '.$tahunawal; break;
 			case 2 : $per_awal = 'February '.$tahunawal; break;
@@ -409,7 +411,7 @@ class Laporan extends CI_Controller
 			case 12 : $per_awal = 'December '.$tahunawal; break;
 		}
 
-		switch ($bulanakhir) 
+		switch ($bulanakhir)
 		{
 			case 1 : $per_akhir = 'January '.$tahunakhir; break;
 			case 2 : $per_akhir = 'February '.$tahunakhir; break;
@@ -430,15 +432,18 @@ class Laporan extends CI_Controller
 		$table 			= 'alternatif';
 		$count 			= count($id_alternatif);
 
-		for ($i=0; $i < $count; $i++) 
-		{ 
-			$value 			= array('hasil_alternatif' => $nilai[$i]);
+		for ($i=0; $i < $count; $i++)
+		{
+			$value 			= array('hasil_alternatif' => $nilai[$i], 'jum_kunjungan' => $kunjungan[$i], 'avg_belanja' => $belanja[$i]);
 			$condition 	 	= array('id_alternatif' => $id_alternatif[$i]);
 
 			$this->M_Query->update_data($table,$value,$condition);
 		}
 
 		$data['alter'] 			= $this->M_Penilaian->get_rangking()->result();
+		$data['hadiah'] 		= $this->M_Penilaian->get_hadiah()->result();
+		$data['hadiahalt']		= $this->M_Query->select_all_data('hadiah_alternatif')->result();
+		$data['double'] 		= $this->M_Penilaian->count_redudansi()->result();
 		$data['level']			= $this->session->userdata("level");
 		$data['title']			= 'Perangkingan';
 

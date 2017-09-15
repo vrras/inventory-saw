@@ -517,6 +517,23 @@ class Penilaian extends CI_Controller
 
 		}
 
+		foreach ($this->M_Penilaian->get_hadiah()->result() as $field_hadiah) {
+			$array_hadiah[] = $field_hadiah->nama_hadiah;
+		}
+
+		$acak_hadiah = array_rand($array_hadiah);
+
+		$ada 	 		= $this->M_Query->select_all_data('hadiah_alternatif')->num_rows();
+		if($ada==0)
+		{
+			$data = array('id_hadiah' => $acak_hadiah);
+			$this->M_Query->insert_data('hadiah_alternatif',$data);
+		}
+		else
+		{
+			$this->M_Penilaian->update_hadiah($acak_hadiah);
+		}
+
 		$last_month  	= $this->input->post('form_last_month');
 		$today	  		= $this->input->post('form_today');
 
@@ -600,8 +617,9 @@ class Penilaian extends CI_Controller
 			$this->M_Query->update_data($table,$value,$condition);
 		}
 
+		$data['hadiah']			= $this->M_Penilaian->get_hadiah()->result();
+		$data['hadiahalt']		= $this->M_Query->select_all_data('hadiah_alternatif')->result();
 		$data['alter'] 			= $this->M_Penilaian->get_rangking()->result();
-		$data['hadiah'] 		= $this->M_Penilaian->get_hadiah()->result();
 		$data['double'] 		= $this->M_Penilaian->count_redudansi()->result();
 		$data['level']			= $this->session->userdata("level");
 		$data['title']			= 'Perangkingan';

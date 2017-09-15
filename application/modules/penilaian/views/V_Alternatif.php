@@ -565,7 +565,6 @@ print_r($benefit3); echo "<br>";
                 <?=$sum_total[$i]?>
                 <input type="hidden" name="form_nilai[]" value="<?=$sum_total[$i]?>">
                 <input type="hidden" name="form_kunjungan[]" value="<?=$loyal[$i]?>">
-                <input type="hidden" name="form_pembayaran[]" value="<?=$loyal[$i]?>">
                 <input type="hidden" name="form_total_blanja[]" value="<?=$total_belanja[$i]/$loyal[$i];?>">
               </td>
             </tr>
@@ -592,14 +591,17 @@ elseif($page=='akhir')
   }
 
   foreach ($double as $field_double) {
-    $hasil_red[]          = $field_double->hasil_alternatif;
+    $hasil_red[] = $field_double->hasil_alternatif;
   }
+
+  foreach ($hadiahalt as $field_hadiahalt) {
+    $id_hadiah[] = $field_hadiahalt->id_hadiah;
+  }
+  $id_hadiah = $id_hadiah[0];
 
   foreach ($hadiah as $field_hadiah) {
-    $array_hadiah[] = $field_hadiah->nama_hadiah;
+    $nama_hadiah[] = $field_hadiah->nama_hadiah;
   }
-
-  $acak_hadiah = array_rand($array_hadiah);
 
   $count_alter = count($id);
   ?>
@@ -667,7 +669,7 @@ elseif($page=='akhir')
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?></b> dan berhak mendapatkan hadiah <b><?=$array_hadiah[$acak_hadiah];?></b>.</h5>
+        <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?></b> dan berhak mendapatkan hadiah <b><?=$nama_hadiah[$id_hadiah];?></b>.</h5>
       </div>
     </div>
   </div>
