@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 21 Agu 2017 pada 12.06
+-- Generation Time: 18 Sep 2017 pada 05.23
 -- Versi Server: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -32,19 +32,10 @@ CREATE TABLE `alternatif` (
   `criteria1` double NOT NULL,
   `criteria2` double NOT NULL,
   `criteria3` double NOT NULL,
-  `hasil_alternatif` double NOT NULL
+  `hasil_alternatif` double NOT NULL,
+  `jum_kunjungan` int(5) NOT NULL,
+  `avg_belanja` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `alternatif`
---
-
-INSERT INTO `alternatif` (`id_alternatif`, `nama_alternatif`, `criteria1`, `criteria2`, `criteria3`, `hasil_alternatif`) VALUES
-(1, 'Agung Setiadi', 3, 2, 4, 0.67),
-(2, 'Bayu Permana', 4, 4, 4, 0.77),
-(3, 'Nano Suharno', 2, 2, 3, 0.69),
-(4, 'Cicih Mintarsih', 2, 4, 4, 0.92),
-(5, 'Rini Sariningsih', 4, 4, 5, 0.85);
 
 -- --------------------------------------------------------
 
@@ -67,13 +58,13 @@ CREATE TABLE `barang` (
 INSERT INTO `barang` (`id_barang`, `nm_barang`, `quantity`, `harga`, `satuan`) VALUES
 (3, 'KULKAS', 1, 3000000, 'UNIT'),
 (4, 'MESIN CUCU', 2, 2500000, 'UNIT'),
-(5, 'LAMPU PHILLIPS', 46, 50000, 'UNIT'),
-(6, 'RECEIVER TANAKA', 10, 300000, 'UNIT'),
+(5, 'LAMPU PHILLIPS', 41, 50000, 'UNIT'),
+(6, 'RECEIVER TANAKA', 8, 300000, 'UNIT'),
 (7, 'VCD', 5, 300000, 'UNIT'),
-(8, 'MAJIKOM', 9, 500000, 'UNIT'),
+(8, 'MAJIKOM', 8, 500000, 'UNIT'),
 (9, 'SALON AKTIV', 10, 350000, 'UNIT'),
 (10, 'KIPAS ANGIN', 8, 450000, 'UNIT'),
-(11, 'TELEVISI', 8, 1000000, 'UNIT');
+(11, 'TELEVISI', 7, 1000000, 'UNIT');
 
 -- --------------------------------------------------------
 
@@ -97,6 +88,46 @@ DELIMITER $$
 CREATE TRIGGER `after_delete_barang` AFTER INSERT ON `detail_transaksi` FOR EACH ROW UPDATE barang SET quantity = (quantity - NEW.qty) WHERE id_barang = NEW.id_barang
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `hadiah`
+--
+
+CREATE TABLE `hadiah` (
+  `id_hadiah` int(5) NOT NULL,
+  `nama_hadiah` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `hadiah`
+--
+
+INSERT INTO `hadiah` (`id_hadiah`, `nama_hadiah`) VALUES
+(4, 'Kulkas'),
+(5, 'TV'),
+(6, 'Laptop'),
+(7, 'Radio'),
+(8, 'Payung');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `hadiah_alternatif`
+--
+
+CREATE TABLE `hadiah_alternatif` (
+  `id_hadiahalt` int(1) NOT NULL,
+  `id_hadiah` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `hadiah_alternatif`
+--
+
+INSERT INTO `hadiah_alternatif` (`id_hadiahalt`, `id_hadiah`) VALUES
+(1, 0);
 
 -- --------------------------------------------------------
 
@@ -149,7 +180,7 @@ CREATE TABLE `kriteria` (
 INSERT INTO `kriteria` (`id_kriteria`, `nm_kriteria`, `atribut`, `bobot`) VALUES
 (1, 'Total Belanja', 'cost', '0.30'),
 (2, 'Pembayaran', 'benefit', '0.30'),
-(3, 'Loyalitas Kunjungan', 'benefit', '0.40');
+(3, 'Loyalitas Belanja', 'benefit', '0.40');
 
 -- --------------------------------------------------------
 
@@ -176,15 +207,12 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `NIK`, `nama_pelanggan`, `jenis_kelamin
 (2, '', 'Bayu Permana', 'Laki-Laki', 'Nusaherang', '088734756324', 'member'),
 (3, '', 'Nano Suharno', 'Laki-Laki', 'safsg', '087946754', 'member'),
 (4, '', 'Cicih Mintarsih', 'Perempuan', 'xcgbsdf', '06784567345', 'member'),
-(5, '', 'Rini Sariningsih', 'Perempuan', 'safag', '078456245', 'member');
-
---
--- Trigger `pelanggan`
---
-DELIMITER $$
-CREATE TRIGGER `insert_alternatif` AFTER INSERT ON `pelanggan` FOR EACH ROW INSERT INTO alternatif (id_alternatif) VALUES (NEW.id_pelanggan)
-$$
-DELIMITER ;
+(5, '', 'Rini Sariningsih', 'Perempuan', 'safag', '078456245', 'member'),
+(6, '', 'Firas', 'Laki-Laki', 'ygvuygb', '0897867867', 'member'),
+(7, '', 'Saya', 'Laki-Laki', 'xfsdg', '067845373', 'member'),
+(8, '', 'Kita', 'Laki-Laki', 'sdgfsdg', '0788545', 'member'),
+(9, '', 'ada', 'Laki-Laki', 'fdgsdfh', '06787346234', 'member'),
+(10, '', 'adaaja', 'Laki-Laki', 'sgs', '058654732', 'member');
 
 -- --------------------------------------------------------
 
@@ -210,8 +238,8 @@ INSERT INTO `subkriteria` (`id_subkriteria`, `id_kriteria`, `list`, `keterangan`
 (8, 1, '500000 - 1000000', 'Cukup', 3),
 (9, 1, '100000 - 500000', 'Buruk', 2),
 (10, 1, '1000 - 100000', 'Sangat Buruk', 1),
-(11, 2, 'Cash', 'Baik', 4),
-(12, 2, 'Credit', 'Buruk', 2),
+(11, 2, 'Cash', 'Buruk', 2),
+(12, 2, 'Credit', 'Baik', 4),
 (13, 3, ' > 10', 'Sangat Baik', 5),
 (14, 3, '8 - 9', 'Baik', 4),
 (15, 3, '6 - 7', 'Cukup', 3),
@@ -246,7 +274,7 @@ INSERT INTO `transaksi` (`id_transaksi`, `id_pelanggan`, `nama_pelanggan`, `tgl_
 ('TRKJ_0004', 1, 'Agung Setiadi', '2017-05-15', 'credit', 1000000.00, 600000.00, '2017-05-15 09:12:47'),
 ('TRKJ_0005', 1, 'Agung Setiadi', '2017-06-01', 'credit', 1000000.00, 450000.00, '2017-06-01 17:49:46'),
 ('TRKJ_0006', 1, 'Agung Setiadi', '2017-06-15', 'cash', 1000000.00, 1000000.00, '2017-06-15 09:20:29'),
-('TRKJ_0007', 1, 'Agung Setiadi', '2017-07-12', 'cash', 1000000.00, 1000000.00, '2017-07-12 14:21:49'),
+('TRKJ_0007', 1, 'Agung Setiadi', '2017-06-12', 'cash', 1000000.00, 1000000.00, '2017-07-12 14:21:49'),
 ('TRKJ_0008', 1, 'Agung Setiadi', '2017-08-09', 'cash', 1000000.00, 1000000.00, '2017-08-09 21:55:55'),
 ('TRKJ_0009', 2, 'Bayu Permana', '2017-03-21', 'cash', 1300000.00, 1300000.00, '2017-03-21 08:18:43'),
 ('TRKJ_0010', 2, 'Bayu Permana', '2017-03-31', 'cash', 1300000.00, 1300000.00, '2017-03-31 18:24:26'),
@@ -266,7 +294,7 @@ INSERT INTO `transaksi` (`id_transaksi`, `id_pelanggan`, `nama_pelanggan`, `tgl_
 ('TRKJ_0024', 4, 'Cicih Mintarsih', '2017-04-06', 'cash', 400000.00, 400000.00, '2017-04-06 13:41:28'),
 ('TRKJ_0025', 4, 'Cicih Mintarsih', '2017-04-25', 'cash', 400000.00, 400000.00, '2017-04-25 12:45:28'),
 ('TRKJ_0026', 4, 'Cicih Mintarsih', '2017-06-14', 'cash', 400000.00, 400000.00, '2017-06-14 15:26:00'),
-('TRKJ_0027', 4, 'Cicih Mintarsih', '2017-07-03', 'cash', 400000.00, 400000.00, '2017-07-03 15:42:44'),
+('TRKJ_0027', 4, 'Cicih Mintarsih', '2017-06-03', 'cash', 400000.00, 400000.00, '2017-07-03 15:42:44'),
 ('TRKJ_0028', 4, 'Cicih Mintarsih', '2017-07-27', 'cash', 400000.00, 400000.00, '2017-07-27 09:29:33'),
 ('TRKJ_0029', 4, 'Cicih Mintarsih', '2017-08-01', 'credit', 400000.00, 100000.00, '2017-08-01 17:33:42'),
 ('TRKJ_0030', 4, 'Cicih Mintarsih', '2017-08-02', 'credit', 400000.00, 230000.00, '2017-08-02 14:43:30'),
@@ -279,7 +307,8 @@ INSERT INTO `transaksi` (`id_transaksi`, `id_pelanggan`, `nama_pelanggan`, `tgl_
 ('TRKJ_0037', 5, 'Rini Sariningsih', '2017-07-18', 'credit', 1200000.00, 200000.00, '2017-07-18 10:20:36'),
 ('TRKJ_0038', 5, 'Rini Sariningsih', '2017-07-31', 'credit', 1200000.00, 4000.00, '2017-07-31 16:29:34'),
 ('TRKJ_0039', 5, 'Rini Sariningsih', '2017-08-01', 'credit', 1200000.00, 60000.00, '2017-08-01 18:38:43'),
-('TRKJ_0040', 5, 'Rini Sariningsih', '2017-08-30', 'credit', 1200000.00, 450000.00, '2017-08-30 12:24:00');
+('TRKJ_0040', 5, 'Rini Sariningsih', '2017-03-30', 'credit', 1200000.00, 450000.00, '2017-08-30 12:24:00'),
+('TRKJ_0041', 3, 'Nano Suharno', '2017-04-04', 'cash', 0.00, 0.00, '2017-04-04 06:36:13');
 
 --
 -- Trigger `transaksi`
@@ -312,8 +341,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nm_user`, `username`, `password`, `level`) VALUES
-(1, 'Maya', 'adm', 'b09c600fddc573f117449b3723f23d64', 'Admin'),
-(2, 'Karyo', 'man', '39c63ddb96a31b9610cd976b896ad4f0', 'Pemilik');
+(2, 'Karyo', 'man', '39c63ddb96a31b9610cd976b896ad4f0', 'Pemilik'),
+(7, 'Maya', 'adm', 'b09c600fddc573f117449b3723f23d64', 'Admin');
 
 --
 -- Indexes for dumped tables
@@ -337,6 +366,18 @@ ALTER TABLE `barang`
 ALTER TABLE `detail_transaksi`
   ADD PRIMARY KEY (`id_transaksi`,`id_barang`),
   ADD KEY `id_barang` (`id_barang`);
+
+--
+-- Indexes for table `hadiah`
+--
+ALTER TABLE `hadiah`
+  ADD PRIMARY KEY (`id_hadiah`);
+
+--
+-- Indexes for table `hadiah_alternatif`
+--
+ALTER TABLE `hadiah_alternatif`
+  ADD PRIMARY KEY (`id_hadiahalt`);
 
 --
 -- Indexes for table `keranjang`
@@ -384,6 +425,16 @@ ALTER TABLE `user`
 ALTER TABLE `barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
+-- AUTO_INCREMENT for table `hadiah`
+--
+ALTER TABLE `hadiah`
+  MODIFY `id_hadiah` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `hadiah_alternatif`
+--
+ALTER TABLE `hadiah_alternatif`
+  MODIFY `id_hadiahalt` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
@@ -392,7 +443,7 @@ ALTER TABLE `kriteria`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pelanggan` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `subkriteria`
 --
@@ -402,7 +453,7 @@ ALTER TABLE `subkriteria`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

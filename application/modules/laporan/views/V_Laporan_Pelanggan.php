@@ -587,6 +587,9 @@ elseif($page=='akhir')
     $id[]           = $field_alter->id_alternatif;
     $nama_alter[]   = $field_alter->nama_alternatif;
     $nilai[]        = $field_alter->hasil_alternatif;
+    $kunjungan[]    = $field_alter->jum_kunjungan;
+    $criteria2[]    = $field_alter->criteria2;
+    $avg_belanja[]  = $field_alter->avg_belanja;
   }
 
   foreach ($double as $field_double) {
@@ -668,6 +671,79 @@ elseif($page=='akhir')
 
     <div class="panel panel-default">
       <div class="panel-heading">
+        <h4><b>Keterangan:</b></h4>
+        <?php
+        for($i=1; $i < $count_alter-1; $i++){
+          if(($nilai[$i-1]==$nilai[$i]) OR ($nilai[$i]==$nilai[$i+1]))
+          {
+            $nama_baru[] = $nama_alter[$i];
+            $nilai_baru[] = $nilai[$i];
+            $kunjungan_baru[] = $kunjungan[$i];
+            $criteria2_baru[] = $criteria2[$i];
+            $avgbelanja_baru[] = $avg_belanja[$i];
+          }
+          else{}
+        }
+        if(!empty($nama_baru))
+        {
+          $count_sama = count($nama_baru);
+        }
+        else
+        {
+          $count_sama = 0;
+        }
+        ?>
+
+        <?php
+            if($count_sama==2)
+            {
+              if($kunjungan_baru[0]==$kunjungan_baru[1])
+              {
+                if($criteria2_baru[0]==$criteria2_baru[1])
+                {
+                  ?>
+                  <h5 class="panel-content"> *Karena <?=$nama_baru[0]?> dan <?=$nama_baru[1]?> memiliki nilai, jumlah kunjungan, dan hasil kriteria 2 (pembayaran) yang sama maka dilakukan perbandingan berdasarkan rata - rata total belanja, dengan rata - rata total belanja masing - masing adalah <?=$avgbelanja_baru[0]?> dan <?=$avgbelanja_baru[1]?>. Jadi, <b><?php echo $criteria2_baru[0] > $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b> memiliki rangking diatas <b><?php echo $criteria2_baru[0] < $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b>.</h5>
+                  <?php
+                }
+                else
+                {
+                  ?>
+                  <h5 class="panel-content"> *Karena <?=$nama_baru[0]?> dan <?=$nama_baru[1]?> memiliki nilai dan jumlah kunjungan yang sama maka dilakukan perbandingan berdasarkan hasil kriteria 2 (pembayaran), dengan hasil kriteria 2 (pembayaran) masing - masing adalah <?=$criteria2_baru[0]?> dan <?=$criteria2_baru[1]?>. Jadi, <b><?php echo $criteria2_baru[0] > $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b> memiliki rangking diatas <b><?php echo $criteria2_baru[0] < $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b>.</h5>
+                  <?php
+                }
+              }
+              else
+              {
+                ?>
+                <h5 class="panel-content"> *Karena <?=$nama_baru[0]?> dan <?=$nama_baru[1]?> memiliki nilai yang sama maka dilakukan perbandingan berdasarkan jumlah kunjungan, dengan jumlah kunjungan masing - masing adalah <?=$kunjungan_baru[0]?> dan <?=$kunjungan_baru[1]?>. Jadi, <b><?php echo $kunjungan_baru[0] > $kunjungan_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b> memiliki rangking diatas <b><?php echo $kunjungan_baru[0] < $kunjungan_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b>.</h5>
+                <?php
+              }
+            }/*
+            elseif($count_sama==3)
+            {
+              if(($kunjungan_baru[0]==$kunjungan_baru[1]) AND ($kunjungan_baru[1]==$kunjungan_baru[2]) )
+              {
+                if(($criteria2_baru[0]==$criteria2_baru[1]) AND ($criteria2_baru[1]==$criteria2_baru[2]) )
+                {
+                  ?>
+                  <h5 class="panel-content"> *Karena <?=$nama_baru[0]?>, <?=$nama_baru[1]?> dan <?=$nama_baru[2]?> memiliki nilai, jumlah kunjungan, dan hasil kriteria 2 (pembayaran) yang sama maka dilakukan perbandingan berdasarkan rata - rata total belanja, dengan rata - rata total belanja masing - masing adalah <?=$avgbelanja_baru[0]?>, <?=$avgbelanja_baru[1]?> dan <?=$avgbelanja_baru[2]?>. Jadi, <b><?php echo ($criteria2_baru[0] > $criteria2_baru[1]) AND ($criteria2_baru[0] > $criteria2_baru[2]) ? $nama_baru[0] : $nama_baru[1]?></b> memiliki rangking diatas <b><?php echo $criteria2_baru[0] < $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b>.</h5>
+                  <?php
+                }
+                else
+                {
+                  ?>
+                  <h5 class="panel-content"> *Karena <?=$nama_baru[0]?> dan <?=$nama_baru[1]?> memiliki nilai dan jumlah kunjungan yang sama maka dilakukan perbandingan berdasarkan hasil kriteria 2 (pembayaran), dengan hasil kriteria 2 (pembayaran) masing - masing adalah <?=$criteria2_baru[0]?> dan <?=$criteria2_baru[1]?>. Jadi, <b><?php echo $criteria2_baru[0] > $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b> memiliki rangking diatas <b><?php echo $criteria2_baru[0] < $criteria2_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b>.</h5>
+                  <?php
+                }
+              }
+              else
+              {
+                ?>
+                <h5 class="panel-content"> *Karena <?=$nama_baru[0]?> dan <?=$nama_baru[1]?> memiliki nilai yang sama maka dilakukan perbandingan berdasarkan jumlah kunjungan, dengan jumlah kunjungan masing - masing adalah <?=$kunjungan_baru[0]?> dan <?=$kunjungan_baru[1]?>. Jadi, <b><?php echo $kunjungan_baru[0] > $kunjungan_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b> memiliki rangking diatas <b><?php echo $kunjungan_baru[0] < $kunjungan_baru[1] ? $nama_baru[0] : $nama_baru[1]?></b>.</h5>
+                <?php
+              }
+            }*/
+        ?>
         <h5 class="panel-content"> *Pelanggan Terbaik Periode <?=$month_title?> adalah <b><?=$nama_alter[0]?></b> dan berhak mendapatkan hadiah <b><?=$nama_hadiah[$id_hadiah];?></b>.</h5>
       </div>
     </div>
