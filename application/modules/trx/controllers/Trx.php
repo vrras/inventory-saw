@@ -7,18 +7,18 @@ class Trx extends CI_Controller
 		parent::__construct();
 		$this->load->model('query/M_Query');
 		date_default_timezone_set('Asia/Jakarta');
-		
+
 		if($this->sign_validation->signin_valid())
 		{
 			redirect(base_url());
 		}
-		
+
 	}
 
 	function transaksi_page()
 	{
 		// --- Barang ---
-		$table 				= "barang";		
+		$table 				= "barang";
 
 		$data['barang'] 	= $this->M_Query->select_all_data($table)->result();
 
@@ -42,9 +42,9 @@ class Trx extends CI_Controller
 		$data['page'] 	= "all";
 
 		// --- Transaksi
-		$table 				= "transaksi";		
+		$table 				= "transaksi";
 
-		$data['transaksi'] 	= $this->M_Query->select_all_data($table)->result();			
+		$data['transaksi'] 	= $this->M_Query->select_all_data($table)->result();
 
 		$data['level']		= $this->session->userdata("level");
 		$data['title']		= 'Transaksi';
@@ -56,7 +56,7 @@ class Trx extends CI_Controller
 	{
 		$tot_bayar 	= $this->input->post('form_total');
 		// --- Barang ---
-		$table 				= "barang";		
+		$table 				= "barang";
 
 		$data['barang'] 	= $this->M_Query->select_all_data($table)->result();
 
@@ -101,26 +101,26 @@ class Trx extends CI_Controller
 		$field 			= "*";
 		$table 			= "barang";
 		$row			= $this->M_Query->select_condition($field,$table,$condition)->result();
-		
+
 		foreach ($row as $field_barang) {
 			$stok 			= $field_barang->quantity;
 			$harga 			= $field_barang->harga;
-		}		
-		
+		}
+
 		$qty 			= $this->input->post('qty');
 		$dsc 			= $this->input->post('disc');
-		$now			= date('Y-m-d H:i:s');	
+		$now			= date('Y-m-d H:i:s');
 
 		$table2 		= "keranjang";
 		$sql 			= $this->M_Query->select_condition($field,$table2,$condition)->result();
-		
+
 		foreach ($sql as $field_keranjang) {
-			$quan 			= $field_keranjang->qty;	
+			$quan 			= $field_keranjang->qty;
 		}
 
 		if($qty>$stok)
 		{
-			redirect(base_url().'trx/penjualan');	
+			redirect(base_url().'trx/penjualan');
 		}elseif($qty=='0')
 		{
 			redirect(base_url().'trx/penjualan');
@@ -143,20 +143,20 @@ class Trx extends CI_Controller
 	}
 
 	function transaksi_batal_keranjang()
-	{		
-		$id 		= $this->uri->segment(4);	
+	{
+		$id 		= $this->uri->segment(4);
 		$table 		= 'keranjang';
 		$condition 	= array('id_barang' => $id );
-		
+
 		$this->M_Query->delete_data($condition,$table);
 		redirect(base_url().'trx/penjualan');
 	}
 
 	function transaksi_batalall_keranjang()
-	{		
+	{
 		$table 		= 'keranjang';
 		$condition 	= array('del' => '1' );
-		
+
 		$this->M_Query->delete_data($condition,$table);
 		redirect(base_url().'trx/penjualan');
 	}
@@ -164,9 +164,9 @@ class Trx extends CI_Controller
 	function transaksi_simpan_penjualan()
 	{
 		$total_harga 	= $this->input->post('form_total');
-		$id_pelanggan	= $this->input->post('form_id_pelanggan');	
-		$jum_bayar 		= $this->input->post('form_jmlbayar');	
-		$status 		= $this->input->post('form_status');
+		$id_pelanggan	= $this->input->post('form_id_pelanggan');
+		$jum_bayar 		= $this->input->post('form_jmlbayar');
+		$status 		= 'cash';
 		$now			= date('Y-m-d H:i:s');
 
 		// --- Tampil Keranjang ---
@@ -184,13 +184,13 @@ class Trx extends CI_Controller
 
 		$member		 = $this->M_Query->select_condition($field,$table,$condition)->num_rows();
 		$member_re	 = $this->M_Query->select_condition($field,$table,$condition)->result();
-		
+
 		if($keranjang>0)
 		{
 			$id_transaksi 	= $this->M_Query->buat_kode();
 			$tot_bayar 		= 0;
 
-			$tgl = date('Y-m-d'); 
+			$tgl = date('Y-m-d');
 
 			foreach ($keranjang2 as $field_keranjang) {
 				$harga_disc 	= $field_keranjang->harga - ($field_keranjang->harga * $field_keranjang->disc) / 100;
@@ -209,7 +209,7 @@ class Trx extends CI_Controller
 		}else
 		{
 			$id_pelanggan 	= "";
-			$nm_pelanggan	= $this->input->post('form_nama');			
+			$nm_pelanggan	= $this->input->post('form_nama');
 			$status_pel		= "no_member";
 			$table 			= 'pelanggan';
 			$field 			= '*';
@@ -221,10 +221,10 @@ class Trx extends CI_Controller
 			$pelanggan_baru 	= $this->M_Query->select_limit($field,$table)->result();
 			foreach ($pelanggan_baru as $field_pelbaru) {
 				$id_pel  			= $field_pelbaru->id_pelanggan;
-				$nama_pelanggan		= $field_pelbaru->nama_pelanggan;	
+				$nama_pelanggan		= $field_pelbaru->nama_pelanggan;
 			}
 		}
-		if(($tot_bayar <= $jum_bayar) OR ($status == 'credit'))
+		if(($tot_bayar <= $jum_bayar) /*OR ($status == 'cash')*/)
 		{
 			$table 		= "transaksi";
 			$data 		= array('id_transaksi' => $id_transaksi, 'id_pelanggan' => $id_pel, 'nama_pelanggan' => $nama_pelanggan, 'tgl_transaksi' => $tgl, 'status' => $status, 'total_harga' => $total_harga, 'bayar' => $jum_bayar, 'timestmp' => $now );
@@ -239,16 +239,20 @@ class Trx extends CI_Controller
 			}
 
 		}
-		
+		else
+		{
+			redirect(base_url().'trx/penjualan/pelanggan/');
+		}
+
 		redirect(base_url().'trx/penjualan/detail/'.$id_transaksi);
 	}
 
 	function transaksi_delete_action()
 	{
-		$id 		= $this->uri->segment(4);	
+		$id 		= $this->uri->segment(4);
 		$table 		= 'transaksi';
 		$condition 	= array('id_transaksi' => $id );
-		
+
 		$this->M_Query->delete_data($condition,$table);
 		redirect(base_url().'trx/penjualan/all');
 	}

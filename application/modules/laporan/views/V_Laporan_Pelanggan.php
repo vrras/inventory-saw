@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 if($page=='awal')
 {
   foreach ($criteria1 as $field_criteria1) {
@@ -673,8 +673,16 @@ elseif($page=='akhir')
       <div class="panel-heading">
         <h4><b>Keterangan:</b></h4>
         <?php
-        for($i=1; $i < $count_alter-1; $i++){
-          if(($nilai[$i-1]==$nilai[$i]) OR ($nilai[$i]==$nilai[$i+1]))
+        for($i=0; $i <= $count_alter-1; $i++){
+          if(($nilai[$i]==$nilai[$i+1]))
+          {
+            $nama_baru[] = $nama_alter[$i];
+            $nilai_baru[] = $nilai[$i];
+            $kunjungan_baru[] = $kunjungan[$i];
+            $criteria2_baru[] = $criteria2[$i];
+            $avgbelanja_baru[] = $avg_belanja[$i];
+          }
+          elseif(($nilai[$i]==$nilai[$i-1]))
           {
             $nama_baru[] = $nama_alter[$i];
             $nilai_baru[] = $nilai[$i];
